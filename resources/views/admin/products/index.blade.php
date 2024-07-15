@@ -1,89 +1,73 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title')
     Danh sách bài viết
 @endsection
 
 @section('main-content')
-    <h2>Danh sách bài viết</h2>
+    <h2>Danh sách sản phẩm</h2>
 
-    <a href="/admin/bai-viet/them-moi" class="btn btn-primary">Tạo bài viết mới</a>
+    <a href="/admin/san-pham/them-moi" class="btn btn-primary">Thêm một sản phẩm mới ?</a>
 
-<!-- Full version of jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    @if (session('success'))
+        <div class="alert alert-success">
+            <ul>
+                <li>{{ session('success') }}</li>
+            </ul>
+        </div>
+    @endif
     <table class="table" id="table_danh_muc">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Thông tin</th>
-                <th>Slug</th>
-                {{-- fr yall making a pfp for a fucking post ? that lame tbh. who gonna checkout that img ? --}}
-                <th>Người tạo</th>
-                <th>Trạng thái bài viết</th>
+                <th>Danh mục sản phẩm</th>
+                <th>Giá sản phẩm</th>
+                <th>Trạng thái sản phẩm</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>ID bài viết</td>
-                <td><div class="d-flex align-items-center">
-                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                        <img src="assets/images/products/img-1.png" alt="" class="img-fluid d-block">
-                    </div>
-                    <div>
-                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Titanium Kim Loại Chuyển Tiếp Quan Trọng trong Công Nghiệp và Y Tế</a></h5>
-                        <span class="text-muted">24 Apr 2021</span>
-                    </div>
-                </div></td>
-                <td>Slug URL</td>
-                <td>Người tạo </td>
-                <td><span class="badge bg-warning">Chuẩn bị đăng</span></td>
-                <td>
-                    <a class="btn btn-primary" href="/admin/bai-viet/chi-tiet/1">Xem chi tiết</a>
-                    <a class="btn btn-danger" href="/admin/bai-viet/xoa/1" onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
-                </td>
-            </tr>
-            <tr>
-                <td>ID bài viết</td>
-                <td><div class="d-flex align-items-center">
-                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                        <img src="assets/images/products/img-1.png" alt="" class="img-fluid d-block">
-                    </div>
-                    <div>
-                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Titanium Kim Loại Chuyển Tiếp Quan Trọng trong Công Nghiệp và Y Tế</a></h5>
-                        <span class="text-muted">24 Apr 2021</span>
-                    </div>
-                </div></td>
-                <td>Slug URL</td>
-                <td>Người tạo </td>
-                <td><span class="badge bg-danger">Đã bị xoá</span></td>
-                <td>
-                    <a class="btn btn-primary" href="/admin/bai-viet/chi-tiet/1">Xem chi tiết</a>
-                    <a class="btn btn-danger" href="/admin/bai-viet/xoa/1" onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
-                </td>
-            </tr>
-            <tr>
-                <td>ID bài viết</td>
-                <td><div class="d-flex align-items-center">
-                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                        <img src="assets/images/products/img-1.png" alt="" class="img-fluid d-block">
-                    </div>
-                    <div>
-                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Titanium Kim Loại Chuyển Tiếp Quan Trọng trong Công Nghiệp và Y Tế</a></h5>
-                        <span class="text-muted">24 Apr 2021</span>
-                    </div>
-                </div></td>
-                <td>Slug URL</td>
-                <td>Người tạo </td>
-                <td><span class="badge bg-success">Đã đăng</span></td>
-                <td>
-                    <a class="btn btn-primary" href="/admin/bai-viet/chi-tiet/1">Xem chi tiết</a>
-                    <a class="btn btn-danger" href="/admin/bai-viet/xoa/1" onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
-                </td>
-            </tr>
+            @foreach ($products as $product)
+                <tr>
+                    <td>{{ $product['id'] }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar-sm bg-light rounded p-1 me-2">
+                                <img src="assets/images/products/img-1.png" alt="prodimg" class="img-fluid d-block">
+                            </div>
+                            <div>
+                                <h5 class="fs-14 my-1"><a href="{{ url('/admin/san-pham/1/chi-tiet') }}"
+                                        class="text-reset">{{ $product['ten_san_pham'] }}</a></h5>
+                                <span class="text-muted">Số lượng sản phẩm: {{ $product['so_luong'] }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{$product->category->ten_danh_muc}}</td>
+                    <td>
+                        <span class="text-muted">Giá gốc:</span> {{ $product['gia_san_pham'] }} VNĐ
+                        <br>
+                        <span class="text-muted">Giá khuyến mãi:</span> {{ $product['gia_khuyen_mai'] }} VNĐ
+                    </td>
+                    <td>
+                        @if ($product['trang_thai'] == 1)
+                            <span class="badge bg-danger">Đã bị ẩn sản phẩm</span>
+                        @elseif ($product['trang_thai'] == 0)
+                            <span class="badge bg-success">Sản phẩm đang bán</span>
+                        @endif
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="/admin/bai-viet/chi-tiet/1">Xem chi tiết</a>
+                        <a class="btn btn-danger" href="/admin/bai-viet/xoa/1"
+                            onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
+                    </td>
+                </tr>
+            @endforeach
             {{-- @foreach ($categories as $category) 
                 <tr>
                     <td>{{ $category['id'] }}</td>
@@ -133,7 +117,7 @@
 @endsection
 
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 @endsection

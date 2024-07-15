@@ -18,4 +18,10 @@ class Category extends Model
         'mo_ta'
     ];
 
+
+    public function products()
+    {
+        return $this->hasMany(Products::class, 'danh_muc_id');
+    }
+
 }

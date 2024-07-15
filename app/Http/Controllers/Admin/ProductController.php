@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Products::with('category')->get();
+        
+        return view('admin.products.index', compact('products'));
     }
 
     /**
@@ -20,7 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -28,7 +33,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'ten_san_pham' => 'required|string|max:255',
+            'so_luong' => 'required|integer',
+            'gia_san_pham' => 'required|numeric',
+            'gia_khuyen_mai' => 'nullable|numeric',
+            'ngay_nhap' => 'nullable|date',
+            'mo_ta' => 'nullable|string',
+            'danh_muc_id' => 'nullable|integer|exists:tb_danh_muc,id',
+            'trang_thai' => 'required|boolean',
+        ]);
+
+        Products::create($request->all());
+
+        return redirect()->route('products.index')->with('success', 'Tạo mới sản phẩm thành công !!!');
     }
 
     /**

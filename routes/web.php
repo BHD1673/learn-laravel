@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::get('/', function () {
-    return view('client.home');
+    return view('client.index');
 })->name('home');
 
 
