@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,9 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        
+        $categories = Category::all();
 
-        return view('admin.categorys.index');
+        return view('admin.categorys.index', compact('categories'));
     }
 
     /**
@@ -23,7 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        
+
         return view('admin.categorys.create');
     }
 
@@ -32,7 +33,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // dd($request->all());
+        $validationData = $request->validate([
+            'ten_danh_muc' => 'required|min:3|max:255',
+            'mo_ta' => 'required|min:3',
+        ]);
+
+        $category = new Category();
+
+        $category->ten_danh_muc = $validationData['ten_danh_muc'];
+        $category->mo_ta = $validationData['mo_ta'];
+
+        $category->save();
+
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -48,7 +63,9 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.categorys.edit');
+        $category = Category::find($id);
+
+        return view('admin.categorys.edit', compact('category'));
     }
 
     /**
@@ -56,7 +73,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validationData = $request->validate([
+            'ten_danh_muc' => 'required|min:3|max:255',
+            'mo_ta' => 'required|min:3',
+        ]);
+
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json(['message' => "Danh mục không tồn tại"], 404);
+        }
+
+        $category->mo_ta = $validationData['mo_ta'];
+        $category->ten_danh_muc = $validationData['ten_danh_muc'];
+
+        $category->save();
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -64,6 +97,13 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the record by its ID
+        $danhMuc = Category::findOrFail($id);
+
+        // Delete the record
+        $danhMuc->delete();
+
+        // Optionally, return a response
+        return redirect()->route('categories.index')->with('success', 'Xoá danh mục thành công');
     }
 }

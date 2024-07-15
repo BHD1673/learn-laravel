@@ -32,12 +32,12 @@ Route::prefix('admin')->group(function () {
 
     // Category Routes
     Route::get('danh-muc',                      [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('danh-muc/them-moi',             [CategoryController::class, 'create'])->name('categories.create');
-    Route::post('danh-muc',                     [CategoryController::class, 'store'])->name('categories.store');
+    Route::post('danh-muc/them-moi',            [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('danh-muc/xu-ly-them',          [CategoryController::class, 'store'])->name('categories.store');
     Route::get('danh-muc/{id}',                 [CategoryController::class, 'show'])->name('categories.show');
     Route::get('danh-muc/{id}/edit',            [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('danh-muc/{id}',                 [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('danh-muc/{id}',              [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::put('danh-muc/{id}/xu-ly',           [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('danh-muc/{id}/xoa',          [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     // User Routes
 

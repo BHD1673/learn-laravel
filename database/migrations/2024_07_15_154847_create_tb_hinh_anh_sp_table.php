@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('san_pham', function (Blueprint $table) {
-            $table->foreign(['id_danh_muc'], 'san_pham_ibfk_1')->references(['id'])->on('danh_muc')->onUpdate('no action')->onDelete('no action');
+        Schema::create('tb_hinh_anh_sp', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->integer('san_pham_id')->nullable()->index('san_pham_id');
+            $table->string('link_anh');
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('san_pham', function (Blueprint $table) {
-            $table->dropForeign('san_pham_ibfk_1');
-        });
+        Schema::dropIfExists('tb_hinh_anh_sp');
     }
 };

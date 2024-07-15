@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('danh_muc', function (Blueprint $table) {
+        Schema::create('tb_gio_hang', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('ten_danh_muc')->nullable();
-            $table->string('mo_ta', 225)->nullable();
+            $table->integer('nguoi_dung_id')->nullable()->index('nguoi_dung_id');
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('danh_muc');
+        Schema::dropIfExists('tb_gio_hang');
     }
 };

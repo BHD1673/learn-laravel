@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('san_pham', function (Blueprint $table) {
+        Schema::create('tb_danh_muc', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('ten_san_pham')->nullable();
+            $table->string('hinh_anh')->nullable();
+            $table->string('ten_danh_muc');
             $table->text('mo_ta')->nullable();
-            $table->integer('id_danh_muc')->nullable()->index('id_danh_muc');
-            $table->integer('gia_co_ban')->nullable();
-            $table->timestamp('ngay_tao')->nullable()->useCurrent();
-            $table->timestamp('ngay_cap_nhat')->useCurrentOnUpdate()->useCurrent();
+            $table->timestamps();
         });
     }
 
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('san_pham');
+        Schema::dropIfExists('tb_danh_muc');
     }
 };

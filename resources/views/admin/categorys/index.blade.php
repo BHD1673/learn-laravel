@@ -12,6 +12,24 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
     Thêm mới danh mục
 </button>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{{ session('success') }}</li>
+        </ul>
+    </div>
+@endif
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -23,19 +41,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action=" {{ url('admin/danh-muc/them-moi')}}" method="POST">
+                <form action=" {{ url('admin/danh-muc/xu-ly-them')}}" method="POST">
+                    @csrf
+                    @method('POST')
                     <div class="form-group">
                         <label for="name">Tên :</label>
-                        <input type="text" class="form-control" id="name" name="name" value="">
+                        <input type="text" class="form-control" id="ten_danh_muc" name="ten_danh_muc" value="">
                     </div>
                     <div class="form-group">
-                        <label for="slug">Đường dẫn tuỳ chọn - Slug (Có thể để trống):</label>
-                        <input type="text" class="form-control" id="slug" name="slug" value="">
+                        <label for="slug">Mô tả : </label>
+                        <input type="text" class="form-control" id="mo_ta" name="mo_ta" value="">
                     </div>
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="user_id" name="user_id" value="1">
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
                 </form>
             </div>
         </div>
@@ -47,15 +67,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    {{-- <table class="table" id="table_danh_muc">
+    <table class="table" id="table_danh_muc">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Tên danh mục</th>
-                <th>Slug</th>
-                <th>Người tạo</th>
-                <th>Ngày tạo</th>
-                <th>Ngày cập nhật gần nhất</th>
+                <th>Mô tả</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -63,14 +80,15 @@
             @foreach ($categories as $category) 
                 <tr>
                     <td>{{ $category['id'] }}</td>
-                    <td>{{ $category['name'] }}</td>
-                    <td>{{ $category['slug'] }}</td>
-                    <td><a href='/admin/users/{{ $category['created_by_id'] }}'>{{ $category['created_by_name'] }}</a></td>
-                    <td>{{ $category['created_at'] }}</td>
-                    <td>{{ $category['updated_at'] }}</td>
+                    <td>{{ $category['ten_danh_muc'] }}</td>
+                    <td>{{ $category['mo_ta'] }}</td>
                     <td>
-                        <a class="btn btn-primary" href="/admin/danh-muc/chi-tiet/{{ $category['id'] }}">Xem chi tiết</a>
-                        <a class="btn btn-danger" href="/admin/danh-muc/xoa/{{ $category['id'] }}" onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
+                        <a class="btn btn-primary" href="/admin/danh-muc/{{ $category['id'] }}/edit">Xem chi tiết</a>
+                        <form action="{{ route('categories.destroy', $category['id']) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -78,7 +96,7 @@
     </table>
 
     <!-- Pagination controls -->
-    @if ($totalPage > 1)
+    {{-- @if ($totalPage > 1)
     <nav aria-label="Page navigation">
         <ul class="pagination">
             @if ($currentPage > 1)

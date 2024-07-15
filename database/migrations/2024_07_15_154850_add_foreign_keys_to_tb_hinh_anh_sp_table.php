@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('dia_chi_nguoi_dung', function (Blueprint $table) {
-            $table->foreign(['id_nguoi_dung'], 'dia_chi_nguoi_dung_ibfk_1')->references(['id'])->on('nguoi_dung')->onUpdate('no action')->onDelete('no action');
+        Schema::table('tb_hinh_anh_sp', function (Blueprint $table) {
+            $table->foreign(['san_pham_id'], 'tb_hinh_anh_sp_ibfk_1')->references(['id'])->on('tb_san_pham')->onUpdate('no action')->onDelete('no action');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('dia_chi_nguoi_dung', function (Blueprint $table) {
-            $table->dropForeign('dia_chi_nguoi_dung_ibfk_1');
+        Schema::table('tb_hinh_anh_sp', function (Blueprint $table) {
+            $table->dropForeign('tb_hinh_anh_sp_ibfk_1');
         });
     }
 };

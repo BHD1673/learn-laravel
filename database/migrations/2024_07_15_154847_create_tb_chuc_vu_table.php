@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bien_the', function (Blueprint $table) {
+        Schema::create('tb_chuc_vu', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('ten_bien_the')->nullable();
+            $table->string('ten_chuc_vu');
         });
     }
 
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bien_the');
+        Schema::dropIfExists('tb_chuc_vu');
     }
 };

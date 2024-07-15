@@ -48,7 +48,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
-                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Bài viết</span>
+                                <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Sản phẩm</span>
                             </a>
                             <div class="collapse menu-dropdown" id="sidebarAuth">
                                 <ul class="nav nav-sm flex-column">
@@ -58,23 +58,23 @@
                                         <div class="collapse menu-dropdown" id="sidebarSignIn">
                                             <ul class="nav nav-sm flex-column">
                                                 <li class="nav-item">
-                                                    <a href="{{url('admin/danh-muc/trang/1')}}" class="nav-link" data-key="t-cover"> Xem danh sách
+                                                    <a href="{{url('admin/danh-muc')}}" class="nav-link" data-key="t-cover"> Xem danh sách
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
 
-                                    <a href="#sidebarProfile" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProfile" data-key="t-profile"> Bài viết
+                                    <a href="#sidebarProfile" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProfile" data-key="t-profile"> Sản phẩm
                                     </a>
                                     <div class="collapse menu-dropdown" id="sidebarProfile">
                                         <ul class="nav nav-sm flex-column">
                                             <li class="nav-item">
-                                                <a href="{{url('admin/bai-viet/them-moi')}}" class="nav-link" data-key="t-simple-page">
-                                                   Thêm bài viết mới </a>
+                                                <a href="{{url('admin/san-pham')}}" class="nav-link" data-key="t-simple-page">
+                                                   Thêm sản phẩm mới </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a href="{{url('admin/bai-viet/trang/1')}}" class="nav-link" data-key="t-settings"> Xem danh sách bài viết </a>
+                                                <a href="{{url('admin/san-pham/them-moi')}}" class="nav-link" data-key="t-settings"> Xem danh sách sản phẩm </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -82,15 +82,28 @@
                             </div>
                         </li>
 
-
-
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{url('admin/seo')}}">
-                                <i class="ri-compasses-2-line"></i> <span data-key="t-icons">SEO</span>
+                            <a class="nav-link menu-link" href="#sidebarLanding" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLanding">
+                                <i class="ri-rocket-line"></i> <span data-key="t-landing">Order sản phẩm</span>
                             </a>
+                            <div class="collapse menu-dropdown" id="sidebarLanding">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/san-phach')}}" class="nav-link" data-key="t-one-page"> Tạo đơn mới </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/don-hang')}}" class="nav-link" data-key="t-multi-level"> Xem danh sách đơn hàng</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
 
-                        <li class="nav-item">
+                        
+
+                        
+                        {{-- I do this later --}}
+                        {{-- <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarMaps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMaps">
                                 <i class="ri-map-pin-line"></i> <span data-key="t-maps">Cấu hình nạp</span>
                             </a>
@@ -113,7 +126,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
                 <!-- Sidebar -->

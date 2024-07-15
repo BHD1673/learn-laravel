@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('admin.layouts.master')
 
 @section('title')
     Chi tiết danh mục bài viết
@@ -54,31 +54,20 @@
                 <div class="card-body">
                     <div class="mx-n6">
                         <div data-simplebar="init" style="max-height: 450px;" class="px-3 simplebar-scrollable-y">
-                            <form action="{{ url('admin/danh-muc/cap-nhat/' . $category['id']) }}" method="POST">
+                            <form action="{{ url('admin/danh-muc/' . $category['id']) }}/xu-ly" method="POST">
                                 @csrf <!-- Add CSRF token for Laravel forms -->
+                                @method('PUT')
                                 <div class="form-group">
                                     <label for="categoryId">ID danh mục</label>
-                                    <input type="text" class="form-control" id="categoryId" value="{{ $category['id'] }}" readonly>
+                                    <input type="text" class="form-control" id="categoryId" name="id" value="{{ $category['id'] }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="categoryName">Tên danh mục</label>
-                                    <input type="text" class="form-control" id="categoryName" name="name" value="{{ $category['name'] }}">
+                                    <input type="text" class="form-control" id="categoryName" name="ten_danh_muc" value="{{ $category['ten_danh_muc'] }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="categorySlug">Slug SEO (Có thể bỏ qua)</label>
-                                    <input type="text" class="form-control" id="categorySlug" name="slug" value="{{ $category['slug'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="createdBy">Tạo bởi:</label>
-                                    <input type="text" class="form-control" id="createdBy" value="{{ $category['created_by'] }}" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="createdAt">Tạo vào lúc</label>
-                                    <input type="text" class="form-control" id="createdAt" value="{{ $category['created_at'] }}" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="updatedAt">Cập nhật gần nhất</label>
-                                    <input type="text" class="form-control" id="updatedAt" value="{{ $category['updated_at'] }}" readonly>
+                                    <label for="categoryDesc">Mô tả</label>
+                                    <input type="text" class="form-control" id="catogoryDesc" name="mo_ta" value="{{ $category['mo_ta'] }}">
                                 </div>
                                 <div class="form-group text-right" style="padding-top: 20px;">
                                     <button type="submit" class="btn btn-primary">Sửa thông tin</button>
