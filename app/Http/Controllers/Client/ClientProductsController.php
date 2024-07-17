@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Comments;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
 class ClientProductsController extends Controller
 {
     public function index() {
-        $products = Products::all();
+        $products = Products::with('images')->get();
         $categories = Category::all();
         return view('client.products.listing', compact('products', 'categories'));
     }
 
     public function show($id) {
-        $product = Products::find($id);
-        return view('client.products.show', compact('product'));
+        $comments = Comments::where('san_pham_id', $id)->where('trang_thai', 1)->get();
+        $product = Products::with('images')->find($id);
+        return view('client.products.show', compact('product', 'comments'));
         
     }
     

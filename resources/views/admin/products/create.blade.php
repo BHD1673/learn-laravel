@@ -176,7 +176,7 @@
             </div>
         @endif
     
-        <form action="{{ route('products.store') }}" method="POST">
+        <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="ten_san_pham">Tên sản phẩm</label>
@@ -200,7 +200,6 @@
             </div>
             <div class="form-group">
                 <label for="danh_muc_id">Chọn danh mục sản phẩm</label>
-                @selected(true)
                 <select name="danh_muc_id" id="danh_muc_id" class="form-control" required>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->ten_danh_muc }}</option>
@@ -214,8 +213,13 @@
                     <option value="1" {{ old('trang_thai') == 1 ? 'selected' : '' }}>Ẩn sản phẩm</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="images">Chọn ảnh sản phẩm</label>
+                <input type="file" name="images[]" id="images" class="form-control" multiple required>
+            </div>
             <button type="submit" class="btn btn-primary">Đăng sản phẩm</button>
         </form>
+        
     </div>
 @endsection
 

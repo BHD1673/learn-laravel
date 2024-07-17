@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ProductImage;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -42,12 +43,31 @@ class ProductController extends Controller
             'mo_ta' => 'nullable|string',
             'danh_muc_id' => 'nullable|integer|exists:tb_danh_muc,id',
             'trang_thai' => 'required|boolean',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate images
         ]);
-
-        Products::create($request->all());
-
+    
+        // Save the product data
+        $product = Products::create($request->all());
+    
+        // Handle the uploaded images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Generate a unique name for each image
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images/products'), $imageName); // Save the image
+    
+                // Save image information in the images table
+                $imageRecord = new ProductImage();
+                $imageRecord->san_pham_id = $product->id; // Link the image to the product
+                $imageRecord->link_anh = $imageName;
+                $imageRecord->save();
+            }
+        }
+    
         return redirect()->route('products.index')->with('success', 'Tạo mới sản phẩm thành công !!!');
     }
+    
+    
 
     /**
      * Display the specified resource.

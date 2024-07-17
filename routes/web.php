@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Client\ClientProductsController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\ClientCommentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::get('/search', [ClientProductsController::class, 'search'])->name('search
 Route::get('/products/all', [ClientProductsController::class, 'index'])->name('userproducts.index');
 Route::get('/products/{id}', [ClientProductsController::class, 'show'])->name('userproducts.show');
 Route::get('/products/{id}/add-to-cart', [ClientProductsController::class, 'addToCart'])->name('userproducts.addtocart');
+Route::post('/handle-comment', [ClientCommentsController::class, 'store'])->name('comments.handlecomment');
 
 
 

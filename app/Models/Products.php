@@ -32,4 +32,9 @@ class Products extends Model
         return $this->belongsTo(Category::class, 'danh_muc_id');
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'san_pham_id');
+    }
+
 }

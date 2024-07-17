@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3">Chi tiết sản phẩm</h1>
@@ -17,23 +18,30 @@
 </div>
 
 
+@if (session('success'))
+<div class="alert alert-success">
+    <ul>
+        <li>{{ session('success') }}</li>
+    </ul>
+</div>
+@endif
+
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner border">
-                    <div class="carousel-item active">
-                        <img class="w-100 h-100" src="https://placehold.co/600x400/orange/white" alt="Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="https://placehold.co/600x400/orange/black" alt="Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="https://placehold.co/600x400/orange/green" alt="Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="https://placehold.co/600x400/orange/mint" alt="Image">
-                    </div>
+                    @if($product->images->isNotEmpty())
+                        @foreach($product->images as $key => $image)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img class="w-100 h-100" src="{{ asset('images/products/' . $image->link_anh) }}" alt="Image">
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="carousel-item active">
+                            <img class="w-100 h-100" src="https://placehold.co/600x400/orange/white" alt="Image">
+                        </div>
+                    @endif
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -43,11 +51,12 @@
                 </a>
             </div>
         </div>
+        
 
         <div class="col-lg-7 pb-5">
             <h3 class="font-weight-semi-bold">{{ $product->ten_san_pham }}</h3>
             <h3 class="font-weight-semi-bold mb-4">{{ $product->gia_san_pham }} VND</h3>
-            <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy. Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd rebum.</p>
+            <p class="mb-4">{{ strlen($product->mo_ta) > 50 ? substr($product->mo_ta, 0, 50) . '...' : $product->mo_ta }}</p>
 
             <div class="d-flex align-items-center mb-4 pt-2">
                 <div class="input-group quantity mr-3" style="width: 130px;">
@@ -87,101 +96,58 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="nav nav-tabs justify-content-center border-secondary mb-4">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Comment sản phẩm</a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade active show" id="tab-pane-1">
                     <h4 class="mb-3">Product Description</h4>
-                    <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                    <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
-                </div>
-                <div class="tab-pane fade" id="tab-pane-2">
-                    <h4 class="mb-3">Additional Information</h4>
-                    <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                </li>
-                              </ul> 
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item px-0">
-                                    Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                </li>
-                                <li class="list-group-item px-0">
-                                    Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                </li>
-                              </ul> 
-                        </div>
-                    </div>
+                    <p>{{ $product->mo_ta }}</p>
+                    
                 </div>
                 <div class="tab-pane fade" id="tab-pane-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="mb-4">1 review for "Colorful Stylish Shirt"</h4>
-                            <div class="media mb-4">
-                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                            <h4 class="mb-4">Review sản phẩm</h4>
+                            {{-- <div class="media mb-4">
                                 <div class="media-body">
                                     <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                    <div class="text-primary mb-2">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                        <i class="far fa-star"></i>
-                                    </div>
                                     <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
                                 </div>
+                            </div> --}}
+
+                            @foreach ($comments as $comment)
+                            <div class="media mb-4">
+                                <div class="media-body">
+                                    <h6>{{ $comment->ten_nguoi_dung }}<small> - <i>{{ $comment->created_at }}</i></small></h6>
+                                    <p>{{ $comment->noi_dung }}</p>
+                                </div>
                             </div>
+                            @endforeach
                         </div>
                         <div class="col-md-6">
-                            <h4 class="mb-4">Leave a review</h4>
-                            <small>Your email address will not be published. Required fields are marked *</small>
+                            <h4 class="mb-4">Comment sản phẩm</h4>
+                            <small>Email của bạn sẽ không công khai. Những vùng có dấu * là những vùng cần thiết</small>
                             <div class="d-flex my-3">
-                                <p class="mb-0 mr-2">Your Rating * :</p>
-                                <div class="text-primary">
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
                             </div>
-                            <form>
+                            <form class="comment-form" action="{{route('comments.handlecomment')}}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <input type="hidden" name="san_pham_id" value="{{ $product->id }}">
                                 <div class="form-group">
-                                    <label for="message">Your Review *</label>
-                                    <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                    <label for="message">Comment của bạn *</label>
+                                    <textarea id="message" cols="30" rows="5" name="noi_dung" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Your Name *</label>
-                                    <input type="text" class="form-control" id="name">
+                                    <label for="name">Tên của bạn*</label>
+                                    <input type="text" class="form-control" id="name" name="ten_nguoi_dung">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Your Email *</label>
-                                    <input type="email" class="form-control" id="email">
+                                    <label for="email">Email của bạn *</label>
+                                    <input type="email" class="form-control" name="email" id="email">
                                 </div>
                                 <div class="form-group mb-0">
-                                    <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
+                                    <input type="submit" value="Gửi comment của bạn" class="btn btn-primary px-3">
                                 </div>
                             </form>
                         </div>
@@ -191,5 +157,64 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form.comment-form');
+        form.addEventListener('submit', validateForm);
 
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form fields
+            const message = document.getElementById('message').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Regular expression for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Clear previous error messages
+            const errorElements = document.getElementsByClassName('error');
+            while (errorElements[0]) {
+                errorElements[0].parentNode.removeChild(errorElements[0]);
+            }
+
+            let isValid = true;
+
+            // Validate message
+            if (message === "") {
+                showError('message', 'Comment của bạn không được để trống.');
+                isValid = false;
+            }
+
+            // Validate name
+            if (name === "") {
+                showError('name', 'Tên của bạn không được để trống.');
+                isValid = false;
+            }
+
+            // Validate email
+            if (email === "") {
+                showError('email', 'Email của bạn không được để trống.');
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                showError('email', 'Email của bạn không hợp lệ.');
+                isValid = false;
+            }
+
+            // If the form is valid, submit it
+            if (isValid) {
+                form.submit();
+            }
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            const errorElement = document.createElement('div');
+            errorElement.className = 'error text-danger';
+            errorElement.innerText = message;
+            element.parentNode.appendChild(errorElement);
+        }
+    });
+</script>
 @endsection
