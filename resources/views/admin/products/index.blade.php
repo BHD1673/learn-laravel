@@ -21,6 +21,9 @@
             </ul>
         </div>
     @endif
+
+    
+
     <table class="table" id="table_danh_muc">
         <thead>
             <tr>
@@ -63,8 +66,14 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" href="/admin/bai-viet/chi-tiet/1">Xem chi tiết</a>
-                        <a class="btn btn-danger" href="/admin/bai-viet/xoa/1"
-                            onclick="return confirm('Chắc chắn muốn xóa không?')">Xoá</a>
+
+                        <form action="{{ route('products.destroy', $product['id']) }}" method="post" display="block-inline">
+                            @csrf
+                            @method('DELETE')
+                                <button class="btn btn-danger" type="submit"
+                                onclick="return confirm('Bạn có chắc muốn xoá không ?')">Xoá
+                                </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

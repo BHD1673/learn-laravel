@@ -6,16 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ProductImage;
 use App\Models\Products;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $products = Products::with('category')->get();
+
+        $search = $request->input('search');
+        $searchTrangThai = $request->input('searchTrangThai');
+
+        if ($search) {
+            $products = Products::where('ten_san_pham', 'like', '%' . $search . '%')->get();
+        }
+        
         
         return view('admin.products.index', compact('products'));
     }
@@ -93,11 +103,49 @@ class ProductController extends Controller
         //
     }
 
+    public function softDelete(string $id) {
+        $product = Products::find($id);
+        
+        if (!$product) {
+            return response()->json(['message' => "Sản phẩm này không tồn tại"], 404);
+        }
+        
+        // return redirect()->
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+    
+        try {
+            $product = Products::findOrFail($id);
+    
+            // If there are related records, you might want to delete them first
+            // For example, if a product has images, delete them before deleting the product
+            $product->images()->delete();
+    
+            $product->delete();
+            
+            DB::commit();
+    
+            return redirect()->route('products.index')->with('success', 'Xoá sản phẩm thành công');
+        } catch (QueryException $e) {
+            DB::rollBack();
+    
+            // Log the error or handle it as necessary
+            // Log::error($e->getMessage());
+    
+            return redirect()->route('products.index')->with('error', 'Xoá sản phẩm thất bại: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            DB::rollBack();
+    
+            // Log the error or handle it as necessary
+            // Log::error($e->getMessage());
+    
+            return redirect()->route('products.index')->with('error', 'Xoá sản phẩm thất bại: ' . $e->getMessage());
+        }
     }
 }

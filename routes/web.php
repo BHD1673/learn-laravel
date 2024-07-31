@@ -23,12 +23,12 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [IndexController::class, 'index'])->name('home');
-Route::get('/search', [ClientProductsController::class, 'search'])->name('search');
-Route::get('/products/all', [ClientProductsController::class, 'index'])->name('userproducts.index');
-Route::get('/products/{id}', [ClientProductsController::class, 'show'])->name('userproducts.show');
-Route::get('/products/{id}/add-to-cart', [ClientProductsController::class, 'addToCart'])->name('userproducts.addtocart');
-Route::post('/handle-comment', [ClientCommentsController::class, 'store'])->name('comments.handlecomment');
+Route::get('/',                                 [IndexController::class, 'index'])->name('home');
+Route::get('/search',                           [ClientProductsController::class, 'search'])->name('search');
+Route::get('/products/all',                     [ClientProductsController::class, 'index'])->name('userproducts.index');
+Route::get('/products/{id}',                    [ClientProductsController::class, 'show'])->name('userproducts.show');
+Route::get('/products/{id}/add-to-cart',        [ClientProductsController::class, 'addToCart'])->name('userproducts.addtocart');
+Route::post('/handle-comment',                  [ClientCommentsController::class, 'store'])->name('comments.handlecomment');
 
 
 
@@ -40,7 +40,7 @@ Route::prefix('admin')->group(function () {
     Route::get('san-pham/{id}',                 [ProductController::class, 'show'])->name('products.show');
     Route::get('san-pham/{id}/edit',            [ProductController::class, 'edit'])->name('products.edit');
     Route::put('san-pham/{id}',                 [ProductController::class, 'update'])->name('products.update');
-    Route::delete('san-pham/{id}',              [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::delete('san-pham/xoa/{id}',              [ProductController::class, 'destroy'])->name('products.destroy');
 
     // Category Routes
     Route::get('danh-muc',                      [CategoryController::class, 'index'])->name('categories.index');
