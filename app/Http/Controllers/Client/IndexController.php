@@ -19,6 +19,24 @@ class IndexController extends Controller
     }
 
 
+    public function login() {
+
+        if (auth()->check()) {
+            return redirect()->route('client.index');
+        }
+
+        return view('client.auth.login');
+    }
+
+    public function register() {
+
+        return view('client.auth.register');
+    }
+
+    public function forgotPassword() {
+
+        return view('client.auth.forgot-password');
+    }
 
 
 }
